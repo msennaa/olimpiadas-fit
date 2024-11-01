@@ -1,4 +1,4 @@
-import Status from '../../../src/Competition/domain/entity/Status';
+import Status from '../../../src/Competition/domain/vo/Status';
 
 test.each([
     'in-progress',

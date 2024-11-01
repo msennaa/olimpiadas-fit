@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import Status from './Status';
+import Status from '../vo/Status';
 
 export default class Competition {
     private status: Status;
