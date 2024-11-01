@@ -8,3 +8,10 @@ test('Create an competition successfully', function () {
     expect(competition.startCompetition).toBeDefined();
     expect(competition.endCompetition).toBeNull();
 })
+
+test('Finish an competition successfully', function () {
+    const competition = Competition.create('any_competition', 'any_competition_type_id');
+    competition.finishCompetition();
+    expect(competition.status).toBe('finished');
+    expect(competition.endCompetition).toBeDefined();
+})
