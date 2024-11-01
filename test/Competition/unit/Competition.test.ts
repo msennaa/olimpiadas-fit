@@ -15,3 +15,8 @@ test('Should finish an competition successfully', function () {
     expect(competition.getStatus()).toBe('finished');
     expect(competition.endCompetition).toBeDefined();
 })
+
+test('Should not finish an competition thats not in progress', function () {
+    const competition = new Competition('any_id', 'any_competition', 'finished', 'any_competition_type_id', new Date(), null);
+    expect(() => competition.finishCompetition()).toThrow(new Error('Competition is not in progress'))
+})
