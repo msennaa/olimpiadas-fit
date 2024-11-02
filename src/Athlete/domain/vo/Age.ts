@@ -7,12 +7,11 @@ export default class Age {
     }
 
     validateAge(age: number) {
-        if (!age) throw new Error('Age is required');
+        if (typeof age !== 'number' || isNaN(age)) throw new Error('Age must be a number');
         if (this.isMinor(age)) throw new Error('Minor cant compete');
         if (this.isElderly(age)) throw new Error('Elderly cant compete');
         return true;
     }
-
 
     getValue() {
         return this.value;
