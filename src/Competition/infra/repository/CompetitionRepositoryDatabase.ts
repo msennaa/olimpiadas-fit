@@ -9,8 +9,9 @@ export default class CompetitionRepositoryDatabase implements CompetitionReposit
         await this.connection.query('INSERT INTO competition (id, name, status, competitionTypeId, startCompetition, endCompetition) VALUE ($1, $2, $3, $4, $5, $6)', [competition.id, competition.name, competition.getStatus(), competition.competitionTypeId, competition.startCompetition, competition.endCompetition]);
     }
 
-    async getById(competitionId: string): Promise<Competition> {
+    async getById(competitionId: string): Promise<Competition | null> {
         const [competitionData] = await this.connection.query('SELECT * FROM competition WHERE id = $1', [competitionId]);
-        return competitionData;
+        if (!competitionData) return null;
+        return new Competition(competitionData.id, competitionData.name, competitionData.status, competitionData.competitionTypeId, competitionData.startCompetition, competitionData.endCompetition);
     }
 }
