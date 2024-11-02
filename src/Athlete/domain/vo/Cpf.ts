@@ -6,7 +6,7 @@ export default class Cpf {
 
     constructor(cpf: string) {
         if (!this.validateCpf(cpf)) throw new Error('Invalid cpf')
-        this.value = cpf
+        this.value = this.removeNonDigits(cpf);
     }
 
     validateCpf(rawCpf: string) {
