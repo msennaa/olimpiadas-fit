@@ -38,3 +38,9 @@ test.each([
 ])('Should not create an valid age with value %s', function (age: number) {
     expect(() => new Age(age)).toThrow(new Error('Elderly cant compete'));
 })
+
+test('should set a new value to age', function () {
+    const age = new Age(18);
+    age.setValue(19);
+    expect(age.getValue()).toBe(19);
+})
