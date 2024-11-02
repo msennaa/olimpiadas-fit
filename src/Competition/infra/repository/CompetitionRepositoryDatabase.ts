@@ -6,7 +6,7 @@ export default class CompetitionRepositoryDatabase implements CompetitionReposit
     constructor(readonly connection: DatabaseConnection) { }
 
     async save(competition: Competition): Promise<void> {
-        await this.connection.query('INSERT INTO competition (id, name, status, competitionTypeId, startCompetition, endCompetition) VALUE ($1, $2, $3, $4, $5, $6)', [competition.id, competition.name, competition.getStatus(), competition.competitionTypeId, competition.startCompetition, competition.endCompetition]);
+        await this.connection.query('INSERT INTO competition (id, name, status, competitionTypeId, startCompetition, endCompetition) VALUES ($1, $2, $3, $4, $5, $6)', [competition.id, competition.name, competition.getStatus(), competition.competitionTypeId, competition.startCompetition, competition.endCompetition]);
     }
 
     async getById(competitionId: string): Promise<Competition | null> {
