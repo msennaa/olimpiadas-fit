@@ -1,4 +1,3 @@
-import GetAthleteById from '../../../src/Athlete/application/usecase/GetAthleteById';
 import RegisterAthlete from '../../../src/Athlete/application/usecase/RegisterAthlete';
 import AthleteRepositoryDatabase from '../../../src/Athlete/infra/repository/AthleteRepositoryDatabase';
 import DatabaseConnection from '../../../src/shared/application/database/DatabaseConnection';
