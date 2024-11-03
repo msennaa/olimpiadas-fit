@@ -8,8 +8,9 @@ let connection: DatabaseConnection;
 let registerAthlete: RegisterAthlete;
 let getAthleteById: GetAthleteById;
 
-beforeEach(() => {
+beforeEach(async () => {
     connection = new PgPromiseAdapter();
+    await connection.query('DELETE FROM athlete', [])
     const athleteRepository = new AthleteRepositoryDatabase(connection);
     registerAthlete = new RegisterAthlete(athleteRepository);
     getAthleteById = new GetAthleteById(athleteRepository);
@@ -35,6 +36,5 @@ test('Should register an athlete successfully', async function () {
 })
 
 afterEach(async () => {
-    await connection.query('DELETE FROM athlete', [])
     connection.close();
 })
