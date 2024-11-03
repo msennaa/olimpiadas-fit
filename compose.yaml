@@ -1,14 +1,24 @@
 services:
-  db:
+  db_production:
     image: postgres:15
-    container_name: postgres_db
+    container_name: postgres_db_production
     environment:
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: app
     ports:
       - "5432:5432"
     volumes:
-      - pg_data:/var/lib/postgresql/data
-      
+      - pg_data_production:/var/lib/postgresql/data
+  db_test:
+    image: postgres:15
+    container_name: postgres_db_test
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: app
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./docker/create.sql:/docker-entrypoint-initdb.d/init.sql
+        
 volumes:
-  pg_data:
+  pg_data_production:
