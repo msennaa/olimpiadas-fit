@@ -52,5 +52,7 @@ test('Should not create a competition type successfully', async function () {
 })
 
 afterEach(async () => {
+    await connection.query('DELETE FROM competition', []);
+    await connection.query('DELETE FROM competition_type', []);
     connection.close();
 })
