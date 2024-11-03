@@ -8,6 +8,7 @@ let createCompetitionType: CreateCompetitionType;
 
 beforeEach(async () => {
     connection = new PgPromiseAdapter();
+    await connection.query('DELETE FROM competition', []);
     await connection.query('DELETE FROM competition_type', []);
     const competitionTypeRepository = new CompetitionTypeRepositoryDatabase(connection);
     createCompetitionType = new CreateCompetitionType(competitionTypeRepository);
@@ -25,6 +26,8 @@ test('Should not create a competition type if already exists another competition
     await expect(createCompetitionType.execute(inputCreateCompetitionTypeOutput)).rejects.toThrow(new Error('Competition Type already exists'));
 })
 
-afterEach(() => {
+afterEach(async () => {
+    await connection.query('DELETE FROM competition', []);
+    await connection.query('DELETE FROM competition_type', []);
     connection.close();
 })
