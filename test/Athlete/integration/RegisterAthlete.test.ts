@@ -1,15 +1,10 @@
 import RegisterAthlete from '../../../src/Athlete/application/usecase/RegisterAthlete';
-import AthleteRepositoryDatabase from '../../../src/Athlete/infra/repository/AthleteRepositoryDatabase';
-import DatabaseConnection from '../../../src/shared/application/database/DatabaseConnection';
-import { PgPromiseAdapter } from '../../../src/shared/infra/database/PgPromiseAdapter';
+import AthleteRepositoryInMemory from '../../../src/Athlete/infra/repository/in-memory/AthleteRepositoryInMemory';
 
-let connection: DatabaseConnection;
 let registerAthlete: RegisterAthlete;
 
 beforeEach(async () => {
-    connection = new PgPromiseAdapter();
-    await connection.query('DELETE FROM athlete', [])
-    const athleteRepository = new AthleteRepositoryDatabase(connection);
+    const athleteRepository = new AthleteRepositoryInMemory();
     registerAthlete = new RegisterAthlete(athleteRepository);
 })
 
@@ -41,7 +36,3 @@ test('Should not register an athlete with invalid age', async function () {
     };
     await expect(registerAthlete.execute(inputRegisterAthleteOutput)).rejects.toThrow(new Error('Age must be a number'));
 });
-
-afterEach(async () => {
-    connection.close();
-})

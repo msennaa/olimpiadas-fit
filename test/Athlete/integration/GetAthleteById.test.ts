@@ -9,7 +9,7 @@ let registerAthlete: RegisterAthlete;
 let getAthleteById: GetAthleteById;
 
 beforeEach(async () => {
-    connection = new PgPromiseAdapter();
+    connection = new PgPromiseAdapter(5433);
     await connection.query('DELETE FROM athlete', [])
     const athleteRepository = new AthleteRepositoryDatabase(connection);
     registerAthlete = new RegisterAthlete(athleteRepository);

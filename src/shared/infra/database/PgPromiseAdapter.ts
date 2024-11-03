@@ -4,8 +4,8 @@ import pgp from "pg-promise";
 export class PgPromiseAdapter implements DatabaseConnection {
     connection: any
 
-    constructor() {
-        this.connection = pgp()("postgres://postgres:123456@localhost:5432/app");
+    constructor(port: number) {
+        this.connection = pgp()(`postgres://postgres:123456@localhost:${port}/app`);
     }
 
     query(statement: string, params: any) {

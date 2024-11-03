@@ -16,7 +16,7 @@ const httpServer = new ExpressAdapter();
 httpServer.register('get', '/health', async () => {
     return { status: 'UP' }
 })
-const connection = new PgPromiseAdapter();
+const connection = new PgPromiseAdapter(5432);
 const athleteRepository = new AthleteRepositoryDatabase(connection);
 const registerAthlete = new RegisterAthlete(athleteRepository)
 new AthleteController(httpServer, registerAthlete);

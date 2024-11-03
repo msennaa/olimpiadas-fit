@@ -12,7 +12,7 @@ let createCompetition: CreateCompetition;
 let getCompetitionById: GetCompetitionById;
 
 beforeEach(async () => {
-    connection = new PgPromiseAdapter();
+    connection = new PgPromiseAdapter(5433);
     await connection.query('DELETE FROM competition', []);
     await connection.query('DELETE FROM competition_type', []);
     const competitionTypeRepository = new CompetitionTypeRepositoryDatabase(connection);
