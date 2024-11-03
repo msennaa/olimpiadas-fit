@@ -12,6 +12,6 @@ export default class CompetitionRepositoryDatabase implements CompetitionReposit
     async getById(competitionId: string): Promise<Competition | null> {
         const [competitionData] = await this.connection.query('SELECT * FROM competition WHERE id = $1', [competitionId]);
         if (!competitionData) return null;
-        return new Competition(competitionData.id, competitionData.name, competitionData.status, competitionData.competitionTypeId, competitionData.startCompetition, competitionData.endCompetition);
+        return new Competition(competitionData.id, competitionData.name, competitionData.status, competitionData.competition_type_id, competitionData.start_competition, competitionData.end_competition);
     }
 }
