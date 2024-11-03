@@ -1,6 +1,5 @@
 import UseCase from '../../../shared/application/usecase/UseCase';
 import Competition from '../../domain/entity/Competition';
-import CompetitionType from '../../domain/entity/CompetitionType';
 import CompetitionRepository from '../repository/CompetitionRepository';
 import CompetitionTypeRepository from '../repository/CompetitionTypeRepository';
 
