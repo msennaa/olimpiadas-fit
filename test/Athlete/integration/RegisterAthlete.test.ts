@@ -6,8 +6,9 @@ import { PgPromiseAdapter } from '../../../src/shared/infra/database/PgPromiseAd
 let connection: DatabaseConnection;
 let registerAthlete: RegisterAthlete;
 
-beforeEach(() => {
+beforeEach(async () => {
     connection = new PgPromiseAdapter();
+    await connection.query('DELETE FROM athlete', [])
     const athleteRepository = new AthleteRepositoryDatabase(connection);
     registerAthlete = new RegisterAthlete(athleteRepository);
 })
@@ -42,6 +43,5 @@ test('Should not register an athlete with invalid age', async function () {
 });
 
 afterEach(async () => {
-    await connection.query('DELETE FROM athlete', [])
     connection.close();
 })
