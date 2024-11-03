@@ -1,6 +1,6 @@
-import DatabaseConnection from '../../../shared/application/database/DatabaseConnection';
-import AthleteRepository from '../../application/repository/AthleteRepository';
-import Athlete from '../../domain/entity/Athlete';
+import DatabaseConnection from '../../../../shared/application/database/DatabaseConnection';
+import AthleteRepository from '../../../application/repository/AthleteRepository';
+import Athlete from '../../../domain/entity/Athlete';
 
 export default class AthleteRepositoryDatabase implements AthleteRepository {
     constructor(readonly connection: DatabaseConnection) { }

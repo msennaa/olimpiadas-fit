@@ -2,8 +2,8 @@ import CreateCompetition from '../../../src/Competition/application/usecase/Crea
 import CreateCompetitionType from '../../../src/Competition/application/usecase/CreateCompetitionType';
 import FinishCompetition from '../../../src/Competition/application/usecase/FinishCompetition';
 import GetCompetitionById from '../../../src/Competition/application/usecase/GetCompetitionById';
-import CompetitionRepositoryDatabase from '../../../src/Competition/infra/repository/CompetitionRepositoryDatabase';
-import CompetitionTypeRepositoryDatabase from '../../../src/Competition/infra/repository/CompetitionTypeRepositoryDatabase';
+import CompetitionRepositoryDatabase from '../../../src/Competition/infra/repository/database/CompetitionRepositoryDatabase';
+import CompetitionTypeRepositoryDatabase from '../../../src/Competition/infra/repository/database/CompetitionTypeRepositoryDatabase';
 import DatabaseConnection from '../../../src/shared/application/database/DatabaseConnection';
 import { PgPromiseAdapter } from '../../../src/shared/infra/database/PgPromiseAdapter';
 

@@ -1,6 +1,6 @@
-import DatabaseConnection from '../../../shared/application/database/DatabaseConnection';
-import CompetitionTypeRepository from '../../application/repository/CompetitionTypeRepository';
-import CompetitionType from '../../domain/entity/CompetitionType';
+import DatabaseConnection from '../../../../shared/application/database/DatabaseConnection';
+import CompetitionTypeRepository from '../../../application/repository/CompetitionTypeRepository';
+import CompetitionType from '../../../domain/entity/CompetitionType';
 
 export default class CompetitionTypeRepositoryDatabase implements CompetitionTypeRepository {
     constructor(readonly connection: DatabaseConnection) { }

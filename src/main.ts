@@ -5,10 +5,10 @@ import AthleteRepositoryDatabase from './Athlete/infra/repository/AthleteReposit
 import { PgPromiseAdapter } from './shared/infra/database/PgPromiseAdapter';
 import CompetitionTypeController from './Competition/infra/controller/CompetitionTypeController';
 import CreateCompetitionType from './Competition/application/usecase/CreateCompetitionType';
-import CompetitionRepositoryTypeDatabase from './Competition/infra/repository/CompetitionTypeRepositoryDatabase';
+import CompetitionRepositoryTypeDatabase from './Competition/infra/repository/database/CompetitionTypeRepositoryDatabase';
 import CompetitionController from './Competition/infra/controller/CompetitionController';
 import CreateCompetition from './Competition/application/usecase/CreateCompetition';
-import CompetitionRepositoryDatabase from './Competition/infra/repository/CompetitionRepositoryDatabase';
+import CompetitionRepositoryDatabase from './Competition/infra/repository/database/CompetitionRepositoryDatabase';
 import GetCompetitionById from './Competition/application/usecase/GetCompetitionById';
 import FinishCompetition from './Competition/application/usecase/FinishCompetition';
 
