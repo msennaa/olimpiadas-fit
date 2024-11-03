@@ -1,11 +1,14 @@
 import crypto from 'crypto';
 import Status from '../vo/Status';
+import Name from '../vo/Name';
 
 export default class Competition {
     private status: Status;
+    private name: Name;
 
-    constructor(readonly id: string, readonly name: string, status: string, readonly competitionTypeId: string, readonly startCompetition: Date, public endCompetition: Date | null) {
+    constructor(readonly id: string, name: string, status: string, readonly competitionTypeId: string, readonly startCompetition: Date, public endCompetition: Date | null) {
         this.status = new Status(status);
+        this.name = new Name(name);
     }
 
     static create(name: string, competitionTypeId: string,): Competition {
@@ -24,5 +27,9 @@ export default class Competition {
         if (this.status.getValue() !== 'in-progress') throw new Error('Competition is not in progress');
         this.status.setStatus('finished');
         this.endCompetition = new Date();
+    }
+
+    getName() {
+        return this.name.getValue();
     }
 }
