@@ -9,6 +9,7 @@ import CompetitionRepositoryTypeDatabase from './Competition/infra/repository/Co
 import CompetitionController from './Competition/infra/controller/CompetitionController';
 import CreateCompetition from './Competition/application/usecase/CreateCompetition';
 import CompetitionRepositoryDatabase from './Competition/infra/repository/CompetitionRepositoryDatabase';
+import GetCompetitionById from './Competition/application/usecase/GetCompetitionById';
 
 const httpServer = new ExpressAdapter();
 httpServer.register('get', '/health', async () => {
@@ -23,5 +24,6 @@ const createCompetitionType = new CreateCompetitionType(competitionTypeRepositor
 new CompetitionTypeController(httpServer, createCompetitionType);
 const competitionRepository = new CompetitionRepositoryDatabase(connection);
 const createCompetition = new CreateCompetition(competitionRepository, competitionTypeRepository);
-new CompetitionController(httpServer, createCompetition);
+const getCompetitionById = new GetCompetitionById(competitionRepository);
+new CompetitionController(httpServer, createCompetition, getCompetitionById);
 httpServer.listen(5000);
