@@ -1,7 +1,6 @@
 import { ExpressAdapter } from './shared/infra/http/ExpressAdapter';
 import AthleteController from './Athlete/infra/controller/AthleteController';
 import RegisterAthlete from './Athlete/application/usecase/RegisterAthlete';
-import AthleteRepositoryDatabase from './Athlete/infra/repository/AthleteRepositoryDatabase';
 import { PgPromiseAdapter } from './shared/infra/database/PgPromiseAdapter';
 import CompetitionTypeController from './Competition/infra/controller/CompetitionTypeController';
 import CreateCompetitionType from './Competition/application/usecase/CreateCompetitionType';
@@ -11,6 +10,10 @@ import CreateCompetition from './Competition/application/usecase/CreateCompetiti
 import CompetitionRepositoryDatabase from './Competition/infra/repository/database/CompetitionRepositoryDatabase';
 import GetCompetitionById from './Competition/application/usecase/GetCompetitionById';
 import FinishCompetition from './Competition/application/usecase/FinishCompetition';
+import AthleteRepositoryDatabase from './Athlete/infra/repository/database/AthleteRepositoryDatabase';
+import AttemptController from './Competition/infra/controller/AttemptController';
+import CreateAttempt from './Competition/application/usecase/CreateAttempt';
+import AttemptRepositoryDatabase from './Competition/infra/repository/database/AttemptRepository';
 
 const httpServer = new ExpressAdapter();
 httpServer.register('get', '/health', async () => {
@@ -28,4 +31,7 @@ const createCompetition = new CreateCompetition(competitionRepository, competiti
 const getCompetitionById = new GetCompetitionById(competitionRepository);
 const finishCompetition = new FinishCompetition(competitionRepository);
 new CompetitionController(httpServer, createCompetition, getCompetitionById, finishCompetition);
+const attemptRepository = new AttemptRepositoryDatabase(connection);
+const createAttempt = new CreateAttempt(attemptRepository, competitionRepository, athleteRepository, competitionTypeRepository);
+new AttemptController(httpServer, createAttempt);
 httpServer.listen(5000);
