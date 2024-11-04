@@ -1,5 +1,6 @@
 import CreateCompetition from '../../../src/Competition/application/usecase/CreateCompetition';
 import CreateCompetitionType from '../../../src/Competition/application/usecase/CreateCompetitionType';
+import FinishCompetition from '../../../src/Competition/application/usecase/FinishCompetition';
 import GetCompetitionById from '../../../src/Competition/application/usecase/GetCompetitionById';
 import CompetitionRepositoryInMemory from '../../../src/Competition/infra/repository/in-memory/CompetitionRepositoryInMemory';
 import CompetitionTypeRepositoryInMemory from '../../../src/Competition/infra/repository/in-memory/CompetitionTypeRepositoryInMemory';
@@ -7,6 +8,7 @@ import CompetitionTypeRepositoryInMemory from '../../../src/Competition/infra/re
 let createCompetitionType: CreateCompetitionType;
 let createCompetition: CreateCompetition;
 let getCompetitionById: GetCompetitionById;
+let finishCompetition: FinishCompetition;
 
 beforeEach(async () => {
     const competitionTypeRepository = new CompetitionTypeRepositoryInMemory();
@@ -14,6 +16,7 @@ beforeEach(async () => {
     createCompetitionType = new CreateCompetitionType(competitionTypeRepository);
     createCompetition = new CreateCompetition(competitionRepository, competitionTypeRepository);
     getCompetitionById = new GetCompetitionById(competitionRepository);
+    finishCompetition = new FinishCompetition(competitionRepository);
 })
 
 test('Should create a competition type successfully', async function () {
@@ -43,4 +46,20 @@ test('Should not create a competition type successfully', async function () {
     const invalidCompetitionId = '4eec8554-63a1-4d69-85f9-ed9878ebe303'
     const inputCreateCompetition = { name: 'any competition', competitionTypeId: invalidCompetitionId }
     await expect(createCompetition.execute(inputCreateCompetition)).rejects.toThrow(new Error('Competition type not found'));
+})
+
+test('Should finish a competition with in memory repository', async function () {
+    const inputCreateCompetitionType = { name: 'any competition type' }
+    const createCompetitionTypeOutput = await createCompetitionType.execute(inputCreateCompetitionType)
+    expect(createCompetitionTypeOutput.competitionTypeId).toBeDefined();
+    const inputCreateCompetition = { name: 'any competition', competitionTypeId: createCompetitionTypeOutput.competitionTypeId }
+    const outputCreateCompetition = await createCompetition.execute(inputCreateCompetition);
+    expect(outputCreateCompetition.competitionId).toBeDefined();
+    await finishCompetition.execute(outputCreateCompetition.competitionId);
+    const outputGetCompetitionById = await getCompetitionById.execute(outputCreateCompetition.competitionId);
+    expect(outputGetCompetitionById.name).toBe(inputCreateCompetition.name);
+    expect(outputGetCompetitionById.competitionTypeId).toBe(createCompetitionTypeOutput.competitionTypeId);
+    expect(outputGetCompetitionById.status).toBe('finished');
+    expect(outputGetCompetitionById.startCompetition).toBeDefined();
+    expect(outputGetCompetitionById.endCompetition).toBeDefined();
 })
