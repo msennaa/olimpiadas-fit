@@ -19,3 +19,13 @@ CREATE TABLE competition (
     end_competition TIMESTAMP,
     FOREIGN KEY (competition_type_id) REFERENCES competition_type(id)
 );
+
+CREATE TABLE attempt (
+    id UUID PRIMARY KEY,
+    athlete_id UUID NOT NULL,
+    competition_id UUID NOT NULL,
+    unit VARCHAR(50) NOT NULL,
+    value NUMERIC NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
+);
