@@ -12,9 +12,10 @@ export default class CompetitionTypeRepositoryInMemory implements CompetitionTyp
         this.competitionMissionTypes.push(competitionType);
     }
 
-    async getById(competitionTypeId: string): Promise<CompetitionType | null> {
+    async getById(competitionTypeId: string): Promise<CompetitionType> {
         const competitionType = this.competitionMissionTypes.find((competitionType: CompetitionType) => competitionType.id === competitionTypeId);
-        return competitionType || null;
+        if (!competitionType) throw new Error('Competition type not found');
+        return competitionType;
     }
 
     async getByName(competitionName: string): Promise<CompetitionType | null> {
