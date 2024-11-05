@@ -9,9 +9,9 @@ export default class CompetitionTypeRepositoryDatabase implements CompetitionTyp
         await this.connection.query('INSERT INTO competition_type (id, name) VALUES ($1, $2)', [competitionType.id, competitionType.getName()]);
     }
 
-    async getById(competitionTypeId: string): Promise<CompetitionType | null> {
+    async getById(competitionTypeId: string): Promise<CompetitionType> {
         const [competitionTypeData] = await this.connection.query('SELECT * FROM competition_type WHERE id = $1', [competitionTypeId]);
-        if (!competitionTypeData) return null;
+        if (!competitionTypeData) throw new Error('Competition type not found');
         return new CompetitionType(competitionTypeData.id, competitionTypeData.name);
     }
 
