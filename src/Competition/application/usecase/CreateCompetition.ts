@@ -7,8 +7,7 @@ export default class CreateCompetition implements UseCase {
     constructor(readonly competitionRepository: CompetitionRepository, readonly competitionTypeRepository: CompetitionTypeRepository) { }
 
     async execute(input: Input): Promise<Output> {
-        const existingCompetitionType = await this.competitionTypeRepository.getById(input.competitionTypeId);
-        if (!existingCompetitionType) throw new Error('Competition type not found');
+        await this.competitionTypeRepository.getById(input.competitionTypeId);
         const competition = Competition.create(input.name, input.competitionTypeId);
         await this.competitionRepository.save(competition);
         return { competitionId: competition.id }
