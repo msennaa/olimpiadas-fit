@@ -63,3 +63,4 @@ test('Should finish a competition with in memory repository', async function () 
     expect(outputGetCompetitionById.startCompetition).toBeDefined();
     expect(outputGetCompetitionById.endCompetition).toBeDefined();
 })
+

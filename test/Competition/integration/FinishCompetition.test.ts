@@ -2,23 +2,16 @@ import CreateCompetition from '../../../src/Competition/application/usecase/Crea
 import CreateCompetitionType from '../../../src/Competition/application/usecase/CreateCompetitionType';
 import FinishCompetition from '../../../src/Competition/application/usecase/FinishCompetition';
 import GetCompetitionById from '../../../src/Competition/application/usecase/GetCompetitionById';
-import CompetitionRepositoryDatabase from '../../../src/Competition/infra/repository/database/CompetitionRepositoryDatabase';
-import CompetitionTypeRepositoryDatabase from '../../../src/Competition/infra/repository/database/CompetitionTypeRepositoryDatabase';
-import DatabaseConnection from '../../../src/shared/application/database/DatabaseConnection';
-import { PgPromiseAdapter } from '../../../src/shared/infra/database/PgPromiseAdapter';
-
-let connection: DatabaseConnection;
+import CompetitionRepositoryInMemory from '../../../src/Competition/infra/repository/in-memory/CompetitionRepositoryInMemory';
+import CompetitionTypeRepositoryInMemory from '../../../src/Competition/infra/repository/in-memory/CompetitionTypeRepositoryInMemory';
 let createCompetitionType: CreateCompetitionType;
 let createCompetition: CreateCompetition;
 let getCompetitionById: GetCompetitionById;
 let finishCompetition: FinishCompetition;
 
 beforeEach(async () => {
-    connection = new PgPromiseAdapter(5433);
-    await connection.query('DELETE FROM competition', []);
-    await connection.query('DELETE FROM competition_type', []);
-    const competitionTypeRepository = new CompetitionTypeRepositoryDatabase(connection);
-    const competitionRepository = new CompetitionRepositoryDatabase(connection);
+    const competitionTypeRepository = new CompetitionTypeRepositoryInMemory();
+    const competitionRepository = new CompetitionRepositoryInMemory();
     createCompetitionType = new CreateCompetitionType(competitionTypeRepository);
     createCompetition = new CreateCompetition(competitionRepository, competitionTypeRepository);
     getCompetitionById = new GetCompetitionById(competitionRepository);
@@ -52,8 +45,4 @@ test('Should not finish an competition if already finished', async function () {
     await expect(finishCompetition.execute(outputCreateCompetition.competitionId)).rejects.toThrow(new Error('Competition is not in progress'));
 })
 
-afterEach(async () => {
-    await connection.query('DELETE FROM competition', []);
-    await connection.query('DELETE FROM competition_type', []);
-    connection.close();
-})
+
