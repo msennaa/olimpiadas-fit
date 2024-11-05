@@ -8,9 +8,9 @@ export default class AthleteRepositoryDatabase implements AthleteRepository {
         await this.connection.query('INSERT INTO athlete (id, name, cpf, age) VALUES ($1, $2, $3, $4)', [athlete.id, athlete.getName(), athlete.getCpf(), athlete.getAge()]);
     }
 
-    async getById(athleteId: string): Promise<Athlete | null> {
+    async getById(athleteId: string): Promise<Athlete> {
         const [athleteData] = await this.connection.query('SELECT * FROM athlete WHERE id = $1', [athleteId]);
-        if (!athleteData) return null;
+        if (!athleteData) throw new Error('Athlete not found');
         return new Athlete(athleteData.id, athleteData.name, athleteData.cpf, athleteData.age);
     }
 
