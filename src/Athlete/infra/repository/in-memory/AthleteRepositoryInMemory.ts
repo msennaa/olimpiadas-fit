@@ -12,9 +12,10 @@ export default class AthleteRepositoryMemory implements AthleteRepository {
         this.athletes.push(athlete);
     }
 
-    async getById(athleteId: string): Promise<any> {
+    async getById(athleteId: string): Promise<Athlete> {
         const athlete = this.athletes.find((athlete: Athlete) => athlete.id === athleteId);
-        return athlete || null;
+        if (!athlete) throw new Error('Athlete not found');
+        return athlete;
     }
 
     async getByCpf(cpf: string): Promise<Athlete | null> {
