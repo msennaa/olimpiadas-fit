@@ -14,8 +14,12 @@ import AthleteRepositoryDatabase from './Athlete/infra/repository/database/Athle
 import AttemptController from './Competition/infra/controller/AttemptController';
 import CreateAttempt from './Competition/application/usecase/CreateAttempt';
 import AttemptRepositoryDatabase from './Competition/infra/repository/database/AttemptRepository';
+import { HyperExpressAdapter } from './shared/infra/http/HyperExpressAdapter';
+import { FastifyAdapter } from './shared/infra/http/FastifyAdapter';
 
 const httpServer = new ExpressAdapter();
+// const httpServer = new HyperExpressAdapter();
+// const httpServer = new FastifyAdapter();
 httpServer.register('get', '/health', async () => {
     return { status: 'UP' }
 })
