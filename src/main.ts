@@ -16,6 +16,7 @@ import CreateAttempt from './Competition/application/usecase/CreateAttempt';
 import AttemptRepositoryDatabase from './Competition/infra/repository/database/AttemptRepository';
 import { HyperExpressAdapter } from './shared/infra/http/HyperExpressAdapter';
 import { FastifyAdapter } from './shared/infra/http/FastifyAdapter';
+import GetRanking from './Competition/application/usecase/GetRanking';
 
 const httpServer = new ExpressAdapter();
 // const httpServer = new HyperExpressAdapter();
@@ -37,5 +38,6 @@ const finishCompetition = new FinishCompetition(competitionRepository);
 new CompetitionController(httpServer, createCompetition, getCompetitionById, finishCompetition);
 const attemptRepository = new AttemptRepositoryDatabase(connection);
 const createAttempt = new CreateAttempt(attemptRepository, competitionRepository, athleteRepository, competitionTypeRepository);
-new AttemptController(httpServer, createAttempt);
+const getRanking = new GetRanking(attemptRepository, competitionRepository, competitionTypeRepository);
+new AttemptController(httpServer, createAttempt, getRanking);
 httpServer.listen(5000);
