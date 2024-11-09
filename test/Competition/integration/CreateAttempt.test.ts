@@ -6,11 +6,13 @@ import CompetitionRepositoryInMemory from '../../../src/Competition/infra/reposi
 import CompetitionTypeRepositoryInMemory from '../../../src/Competition/infra/repository/in-memory/CompetitionTypeRepositoryInMemory';
 import AttemptInMemoryRepository from '../../../src/Competition/infra/repository/in-memory/AttemptInMemoryRepository';
 import AthleteRepositoryMemory from '../../../src/Athlete/infra/repository/in-memory/AthleteRepositoryInMemory';
+import FinishCompetition from '../../../src/Competition/application/usecase/FinishCompetition';
 
 let createAttempt: CreateAttempt;
 let createCompetition: CreateCompetition;
 let createCompetitionType: CreateCompetitionType;
 let registerAthlete: RegisterAthlete
+let finishCompetition: FinishCompetition;
 
 beforeEach(async () => {
     const attemptRepository = new AttemptInMemoryRepository();
@@ -21,6 +23,7 @@ beforeEach(async () => {
     createCompetition = new CreateCompetition(competitionRepository, competitionTypeRepository);
     createCompetitionType = new CreateCompetitionType(competitionTypeRepository);
     registerAthlete = new RegisterAthlete(athleteRepository);
+    finishCompetition = new FinishCompetition(competitionRepository);
 })
 
 test('Should create an attempt', async function () {
@@ -97,4 +100,25 @@ test('Should not if competition do not exists create an attempt', async function
         value: 10
     }
     expect(createAttempt.execute(inputCreateAttempt)).rejects.toThrow(new Error('Competition not found'));
+})
+
+test('Should create an attempt', async function () {
+    const inputCreateCompetitionType = { name: 'hydration' }
+    const createCompetitionTypeOutput = await createCompetitionType.execute(inputCreateCompetitionType)
+    const inputCreateCompetition = { name: 'any hydration competition', competitionTypeId: createCompetitionTypeOutput.competitionTypeId }
+    const createCompetitionOutput = await createCompetition.execute(inputCreateCompetition);
+    await finishCompetition.execute(createCompetitionOutput.competitionId);
+    const inputRegisterAthleteOutput = {
+        name: 'any name',
+        cpf: '31896670040',
+        age: '18'
+    }
+    const registerAthleteOutput = await registerAthlete.execute(inputRegisterAthleteOutput)
+    const inputCreateAttempt = {
+        athleteId: registerAthleteOutput.athleteId,
+        competitionId: createCompetitionOutput.competitionId,
+        unit: 'ml',
+        value: 10
+    }
+    await expect(createAttempt.execute(inputCreateAttempt)).rejects.toThrow(new Error('Competition is not in progress'));
 })
