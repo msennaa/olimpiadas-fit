@@ -10,6 +10,7 @@ export default class CreateAttempt implements UseCase {
 
     async execute(input: Input): Promise<Output> {
         const competition = await this.competitionRepository.getById(input.competitionId);
+        if (competition.getStatus() !== 'in-progress') throw new Error('Competition is not in progress');
         const competitionType = await this.competitionTypeRepository.getById(competition.competitionTypeId);
         const athlete = await this.athleteRepository.getById(input.athleteId);
         const allowedToAttempt = await this.attemptRepository.allowedToAttempt(athlete.id, competition.id, competitionType.getName());
