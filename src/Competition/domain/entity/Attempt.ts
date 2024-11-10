@@ -1,9 +1,10 @@
+import { Uuid } from '../../../shared/domain/vo/Uuid';
 import Attempt from '../../application/factory/Attempt';
 
 export abstract class AttemptBase implements Attempt {
     protected unit: string;
     protected value: number;
-    private id: string;
+    private id: Uuid;
     private createdAt: Date;
     private deletedAt: Date | null;
 
@@ -13,7 +14,7 @@ export abstract class AttemptBase implements Attempt {
         unit: string,
         value: number
     ) {
-        this.id = crypto.randomUUID();
+        this.id = new Uuid();
         this.createdAt = new Date();
         this.deletedAt = null;
         this.validate(unit, value);
@@ -32,7 +33,7 @@ export abstract class AttemptBase implements Attempt {
     }
 
     getId(): string {
-        return this.id;
+        return this.id.getValue();
     }
 
     getCreatedAt(): Date {
