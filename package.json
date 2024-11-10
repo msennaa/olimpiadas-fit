@@ -1,6 +1,8 @@
 {
   "description": "",
   "dependencies": {
+    "@fastify/swagger": "^9.2.0",
+    "@fastify/swagger-ui": "^5.1.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/sinon": "^17.0.3",
