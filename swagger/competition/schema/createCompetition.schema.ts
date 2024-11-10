@@ -21,9 +21,21 @@ export const createCompetition = {
         responses: {
             "200": {
                 description: "Competição criada com sucesso",
+                schema: {
+                    type: "object",
+                    properties: {
+                        competitionId: { type: "string" },
+                    },
+                },
             },
             "422": {
-                description: "Parâmetros inválidos",
+                description: "Parametros inválidos",
+                schema: {
+                    type: "object",
+                    properties: {
+                        message: { type: "string" },
+                    },
+                },
             },
         },
     },
