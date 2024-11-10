@@ -13,7 +13,7 @@ export default class CreateCompetitionType implements UseCase {
         if (existingCompetitionType) throw new ConflictError('Competition Type already exists');
         const competitionType = CompetitionType.create(input.name);
         await this.competitionTypeRepository.save(competitionType);
-        return { competitionTypeId: competitionType.id };
+        return { competitionTypeId: competitionType.getId() };
     }
 
 }

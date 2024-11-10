@@ -1,20 +1,25 @@
-import crypto from 'crypto';
 import Name from '../vo/Name';
+import { Uuid } from '../../../shared/domain/vo/Uuid';
 
 export default class CompetitionType {
-
     private name: Name;
+    private id: Uuid;
 
-    constructor(readonly id: string, name: string) {
+    constructor(id: string, name: string) {
+        this.id = new Uuid(id);
         this.name = new Name(name);
     }
 
     static create(name: string): CompetitionType {
-        const competitionId = crypto.randomUUID();
-        return new CompetitionType(competitionId, name);
+        const competitionTypeId = new Uuid();
+        return new CompetitionType(competitionTypeId.getValue(), name);
     }
 
     getName() {
         return this.name.getValue();
+    }
+
+    getId() {
+        return this.id.getValue();
     }
 }

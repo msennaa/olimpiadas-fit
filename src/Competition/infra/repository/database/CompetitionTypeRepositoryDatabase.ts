@@ -7,7 +7,7 @@ export default class CompetitionTypeRepositoryDatabase implements CompetitionTyp
     constructor(readonly connection: DatabaseConnection) { }
 
     async save(competitionType: CompetitionType): Promise<void> {
-        await this.connection.query('INSERT INTO competition_type (id, name) VALUES ($1, $2)', [competitionType.id, competitionType.getName()]);
+        await this.connection.query('INSERT INTO competition_type (id, name) VALUES ($1, $2)', [competitionType.getId(), competitionType.getName()]);
     }
 
     async getById(competitionTypeId: string): Promise<CompetitionType> {

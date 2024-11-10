@@ -14,13 +14,13 @@ export default class CompetitionRepositoryInMemory implements CompetitionReposit
     }
 
     async getById(competitionId: string): Promise<Competition> {
-        const competition = this.competition.find((competition: Competition) => competition.id === competitionId);
+        const competition = this.competition.find((competition: Competition) => competition.getId() === competitionId);
         if (!competition) throw new NotFoundError('Competition not found');
         return competition
     }
 
     async updateCompetition(competition: Competition): Promise<void> {
-        const competitionIndex = this.competition.findIndex((competition: Competition) => competition.id === competition.id);
+        const competitionIndex = this.competition.findIndex((competition: Competition) => competition.getId() === competition.getId());
         this.competition[competitionIndex] = competition;
     }
 }
