@@ -11,8 +11,8 @@ export class FastifyAdapter implements HttpServer {
     register(method: string, url: string, callback: Function): void {
         (this.app as any)[method](url.replace(/\{|\}/g, ''), async (request: FastifyRequest, reply: FastifyReply) => {
             try {
-                const { params, body } = request;
-                const output = await callback(params, body);
+                const { params, body, query } = request;
+                const output = await callback(params, body, query);
                 reply.send(output);
             } catch (error: any) {
                 reply.status(422).send({
