@@ -28,8 +28,8 @@ export class FastifyAdapter implements HttpServer {
                 const output = await callback(params, body, query);
                 reply.send(output);
             } catch (error: any) {
-                reply.status(422).send({
-                    message: error.message,
+                reply.status(error.status || 500).send({
+                    message: error.message || 'Internal server error',
                 });
             }
         });
