@@ -1,5 +1,7 @@
 import AthleteRepository from '../../../Athlete/application/repository/AthleteRepository';
 import UseCase from '../../../shared/application/usecase/UseCase';
+import { BadRequestError } from '../../../shared/domain/errors/BadRequestError';
+import { ForbiddenError } from '../../../shared/domain/errors/ForbiddenError';
 import { AttemptFactory } from '../../domain/factory/Attempts/AttemptHandler';
 import AttemptRepository from '../repository/AttemptRepository';
 import CompetitionRepository from '../repository/CompetitionRepository';
@@ -10,11 +12,11 @@ export default class CreateAttempt implements UseCase {
 
     async execute(input: Input): Promise<Output> {
         const competition = await this.competitionRepository.getById(input.competitionId);
-        if (competition.getStatus() !== 'in-progress') throw new Error('Competition is not in progress');
+        if (competition.getStatus() !== 'in-progress') throw new BadRequestError('Competition is not in progress');
         const competitionType = await this.competitionTypeRepository.getById(competition.competitionTypeId);
         const athlete = await this.athleteRepository.getById(input.athleteId);
         const allowedToAttempt = await this.attemptRepository.allowedToAttempt(athlete.id, competition.id, competitionType.getName());
-        if (!allowedToAttempt) throw new Error('Athlete not allowed to attempt');
+        if (!allowedToAttempt) throw new ForbiddenError('Athlete not allowed to attempt');
         const attempt = AttemptFactory.create(competitionType.getName(), athlete.id, competition.id, input.unit, input.value);
         await this.attemptRepository.save(attempt);
         return {

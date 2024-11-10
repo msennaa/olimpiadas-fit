@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../../../shared/domain/errors/NotFoundError';
 import AthleteRepository from '../../../application/repository/AthleteRepository';
 import Athlete from '../../../domain/entity/Athlete';
 
@@ -14,7 +15,7 @@ export default class AthleteRepositoryMemory implements AthleteRepository {
 
     async getById(athleteId: string): Promise<Athlete> {
         const athlete = this.athletes.find((athlete: Athlete) => athlete.id === athleteId);
-        if (!athlete) throw new Error('Athlete not found');
+        if (!athlete) throw new NotFoundError('Athlete not found');
         return athlete;
     }
 

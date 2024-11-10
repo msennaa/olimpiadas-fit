@@ -1,3 +1,4 @@
+import { BadRequestError } from '../../../../shared/domain/errors/BadRequestError';
 import Attempt from '../../../application/factory/Attempt';
 import { DartAttempt } from './DartAttempt';
 import { HydrationAttempt } from './HydrationAttempt';
@@ -16,7 +17,7 @@ export class AttemptFactory {
             case 'dart':
                 return new DartAttempt(athleteId, competitionId, unit, value);
             default:
-                throw new Error('Invalid competition type');
+                throw new BadRequestError('Invalid competition type');
         }
     }
 }

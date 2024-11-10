@@ -1,4 +1,5 @@
 import DatabaseConnection from '../../../../shared/application/database/DatabaseConnection';
+import { NotFoundError } from '../../../../shared/domain/errors/NotFoundError';
 import CompetitionTypeRepository from '../../../application/repository/CompetitionTypeRepository';
 import CompetitionType from '../../../domain/entity/CompetitionType';
 
@@ -11,7 +12,7 @@ export default class CompetitionTypeRepositoryDatabase implements CompetitionTyp
 
     async getById(competitionTypeId: string): Promise<CompetitionType> {
         const [competitionTypeData] = await this.connection.query('SELECT * FROM competition_type WHERE id = $1', [competitionTypeId]);
-        if (!competitionTypeData) throw new Error('Competition type not found');
+        if (!competitionTypeData) throw new NotFoundError('Competition type not found');
         return new CompetitionType(competitionTypeData.id, competitionTypeData.name);
     }
 

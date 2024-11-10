@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import Status from '../vo/Status';
 import Name from '../vo/Name';
+import { BadRequestError } from '../../../shared/domain/errors/BadRequestError';
 
 export default class Competition {
     private status: Status;
@@ -24,7 +25,7 @@ export default class Competition {
     }
 
     finishCompetition(): void {
-        if (this.status.getValue() !== 'in-progress') throw new Error('Competition is not in progress');
+        if (this.status.getValue() !== 'in-progress') throw new BadRequestError('Competition is not in progress');
         this.status.setStatus('finished');
         this.endCompetition = new Date();
     }

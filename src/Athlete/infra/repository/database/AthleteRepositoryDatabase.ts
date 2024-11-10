@@ -1,4 +1,5 @@
 import DatabaseConnection from '../../../../shared/application/database/DatabaseConnection';
+import { NotFoundError } from '../../../../shared/domain/errors/NotFoundError';
 import AthleteRepository from '../../../application/repository/AthleteRepository';
 import Athlete from '../../../domain/entity/Athlete';
 
@@ -10,7 +11,7 @@ export default class AthleteRepositoryDatabase implements AthleteRepository {
 
     async getById(athleteId: string): Promise<Athlete> {
         const [athleteData] = await this.connection.query('SELECT * FROM athlete WHERE id = $1', [athleteId]);
-        if (!athleteData) throw new Error('Athlete not found');
+        if (!athleteData) throw new NotFoundError('Athlete not found');
         return new Athlete(athleteData.id, athleteData.name, athleteData.cpf, athleteData.age);
     }
 

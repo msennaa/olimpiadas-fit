@@ -1,3 +1,5 @@
+import { ValidationError } from '../../../shared/domain/errors/ValidationError';
+
 export default class Cpf {
     private CPF_LENGTH = 11;
     private FACTOR_FIRST_DIGIT = 10;
@@ -5,7 +7,7 @@ export default class Cpf {
     private value: string;
 
     constructor(cpf: string) {
-        if (!this.validateCpf(cpf)) throw new Error('Invalid cpf')
+        if (!this.validateCpf(cpf)) throw new ValidationError('Invalid cpf')
         this.value = this.removeNonDigits(cpf);
     }
 

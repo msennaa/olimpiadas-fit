@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../../../shared/domain/errors/NotFoundError';
 import CompetitionTypeRepository from '../../../application/repository/CompetitionTypeRepository';
 import CompetitionType from '../../../domain/entity/CompetitionType';
 
@@ -14,7 +15,7 @@ export default class CompetitionTypeRepositoryInMemory implements CompetitionTyp
 
     async getById(competitionTypeId: string): Promise<CompetitionType> {
         const competitionType = this.competitionMissionTypes.find((competitionType: CompetitionType) => competitionType.id === competitionTypeId);
-        if (!competitionType) throw new Error('Competition type not found');
+        if (!competitionType) throw new NotFoundError('Competition type not found');
         return competitionType;
     }
 

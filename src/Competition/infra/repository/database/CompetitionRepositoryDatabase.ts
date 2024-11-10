@@ -1,4 +1,5 @@
 import DatabaseConnection from '../../../../shared/application/database/DatabaseConnection';
+import { NotFoundError } from '../../../../shared/domain/errors/NotFoundError';
 import CompetitionRepository from '../../../application/repository/CompetitionRepository';
 import Competition from '../../../domain/entity/Competition';
 
@@ -10,7 +11,7 @@ export default class CompetitionRepositoryDatabase implements CompetitionReposit
 
     async getById(competitionId: string): Promise<Competition> {
         const [competitionData] = await this.connection.query('SELECT * FROM competition WHERE id = $1', [competitionId]);
-        if (!competitionData) throw new Error('Competition not found');
+        if (!competitionData) throw new NotFoundError('Competition not found');
         return new Competition(competitionData.id, competitionData.name, competitionData.status, competitionData.competition_type_id, competitionData.start_competition, competitionData.end_competition);
     }
 

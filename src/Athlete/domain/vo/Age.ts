@@ -1,3 +1,6 @@
+import { ForbiddenError } from '../../../shared/domain/errors/ForbiddenError';
+import { ValidationError } from '../../../shared/domain/errors/ValidationError';
+
 export default class Age {
     private value: number;
 
@@ -7,9 +10,9 @@ export default class Age {
     }
 
     validateAge(age: number) {
-        if (typeof age !== 'number' || isNaN(age)) throw new Error('Age must be a number');
-        if (this.isMinor(age)) throw new Error('Minor cant compete');
-        if (this.isElderly(age)) throw new Error('Elderly cant compete');
+        if (typeof age !== 'number' || isNaN(age)) throw new ValidationError('Age must be a number');
+        if (this.isMinor(age)) throw new ForbiddenError('Minor cant compete');
+        if (this.isElderly(age)) throw new ForbiddenError('Elderly cant compete');
         return true;
     }
 
