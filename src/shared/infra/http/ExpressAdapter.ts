@@ -1,5 +1,7 @@
 import HttpServer from '../../application/http/HttpServer';
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerDocument } from '../../../../swagger/swagger.config';
 
 export class ExpressAdapter implements HttpServer {
     app: any
@@ -7,6 +9,7 @@ export class ExpressAdapter implements HttpServer {
     constructor() {
         this.app = express();
         this.app.use(express.json());
+        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     }
 
     register(method: string, url: string, callback: Function): void {
