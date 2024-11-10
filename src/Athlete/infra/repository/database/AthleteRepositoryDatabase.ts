@@ -6,7 +6,7 @@ import Athlete from '../../../domain/entity/Athlete';
 export default class AthleteRepositoryDatabase implements AthleteRepository {
     constructor(readonly connection: DatabaseConnection) { }
     async save(athlete: Athlete): Promise<void> {
-        await this.connection.query('INSERT INTO athlete (id, name, cpf, age) VALUES ($1, $2, $3, $4)', [athlete.id, athlete.getName(), athlete.getCpf(), athlete.getAge()]);
+        await this.connection.query('INSERT INTO athlete (id, name, cpf, age) VALUES ($1, $2, $3, $4)', [athlete.getId(), athlete.getName(), athlete.getCpf(), athlete.getAge()]);
     }
 
     async getById(athleteId: string): Promise<Athlete> {

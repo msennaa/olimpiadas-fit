@@ -11,7 +11,7 @@ export default class RegisterAthlete implements UseCase {
         if (existingAthlete) throw new ConflictError('Athlete already exists');
         const athlete = Athlete.create(input.name, input.cpf, +input.age);
         await this.athleteRepository.save(athlete);
-        return { athleteId: athlete.id };
+        return { athleteId: athlete.getId() };
     }
 }
 

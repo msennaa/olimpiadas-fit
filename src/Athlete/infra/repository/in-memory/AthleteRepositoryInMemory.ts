@@ -14,7 +14,7 @@ export default class AthleteRepositoryMemory implements AthleteRepository {
     }
 
     async getById(athleteId: string): Promise<Athlete> {
-        const athlete = this.athletes.find((athlete: Athlete) => athlete.id === athleteId);
+        const athlete = this.athletes.find((athlete: Athlete) => athlete.getId() === athleteId);
         if (!athlete) throw new NotFoundError('Athlete not found');
         return athlete;
     }

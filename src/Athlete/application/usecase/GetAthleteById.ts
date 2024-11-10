@@ -7,7 +7,7 @@ export default class GetAthleteById implements UseCase {
     async execute(athleteId: string): Promise<Output> {
         const athlete = await this.athleteRepository.getById(athleteId);
         return {
-            athleteId: athlete.id,
+            athleteId: athlete.getId(),
             name: athlete.getName(),
             age: athlete.getAge()
         }
