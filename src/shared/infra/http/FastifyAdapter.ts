@@ -1,11 +1,24 @@
 import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import swagger from '@fastify/swagger';
+import swaggerUi from '@fastify/swagger-ui';
 import HttpServer from '../../application/http/HttpServer';
+import { swaggerDocument } from '../../../../swagger/swagger.config';
 
 export class FastifyAdapter implements HttpServer {
     app: FastifyInstance;
 
     constructor() {
         this.app = Fastify();
+        this.app.register(swagger, {
+            swagger: swaggerDocument,
+        });
+        this.app.register(swaggerUi, {
+            routePrefix: '/api-docs',
+            uiConfig: {
+                docExpansion: 'none',
+                deepLinking: false,
+            },
+        });
     }
 
     register(method: string, url: string, callback: Function): void {
