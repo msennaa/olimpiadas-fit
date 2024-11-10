@@ -18,8 +18,8 @@ export class ExpressAdapter implements HttpServer {
                 const output = await callback(req.params, req.body, req.query);
                 res.json(output);
             } catch (error: any) {
-                res.status(422).json({
-                    message: error.message
+                res.status(error.status || 500).json({
+                    message: error.message || 'Internal server error'
                 })
             }
         });
