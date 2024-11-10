@@ -20,13 +20,23 @@ export const getCompetitionById = {
                 schema: {
                     type: "object",
                     properties: {
-                        id: { type: "integer" },
-                        nome: { type: "string" },
+                        competitionId: { type: "string" },
+                        competitionTypeId: { type: "string" },
+                        name: { type: "string" },
+                        status: { type: "string" },
+                        startCompetition: { type: "string" },
+                        endCompetition: { type: "string" },
                     },
                 },
             },
             "422": {
-                description: "Athlete não encontrado",
+                description: "Competição não encontrada",
+                schema: {
+                    type: "object",
+                    properties: {
+                        message: { type: "string" },
+                    },
+                },
             },
         },
     },
