@@ -10,7 +10,7 @@ export default class GetRanking implements UseCase {
         const competitionType = await this.competitionTypeRepository.getById(competition.competitionTypeId);
         input.page = input.page || 1;
         input.limit = input.limit || 10;
-        const ranking = await this.attemptRepository.getRanking(competition.id, input.page, input.limit, competitionType.getName());
+        const ranking = await this.attemptRepository.getRanking(competition.getId(), input.page, input.limit, competitionType.getName());
         return ranking;
     }
 }

@@ -10,7 +10,7 @@ export default class CreateCompetition implements UseCase {
         await this.competitionTypeRepository.getById(input.competitionTypeId);
         const competition = Competition.create(input.name, input.competitionTypeId);
         await this.competitionRepository.save(competition);
-        return { competitionId: competition.id }
+        return { competitionId: competition.getId() }
     }
 }
 

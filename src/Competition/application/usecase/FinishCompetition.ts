@@ -10,7 +10,7 @@ export default class FinishCompetition implements UseCase {
         competition.finishCompetition();
         await this.competitionRepository.updateCompetition(competition);
         return {
-            competitionId: competition.id,
+            competitionId: competition.getId(),
             status: competition.getStatus()
         }
     }

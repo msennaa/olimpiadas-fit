@@ -11,7 +11,7 @@ export default class GetCompetitionById implements UseCase {
     async execute(competitionId: string): Promise<Output> {
         const competition = await this.competitionRepository.getById(competitionId);
         return {
-            competitionId: competition.id,
+            competitionId: competition.getId(),
             competitionTypeId: competition.competitionTypeId,
             name: competition.getName(),
             status: competition.getStatus(),

@@ -15,9 +15,9 @@ export default class CreateAttempt implements UseCase {
         if (competition.getStatus() !== 'in-progress') throw new BadRequestError('Competition is not in progress');
         const competitionType = await this.competitionTypeRepository.getById(competition.competitionTypeId);
         const athlete = await this.athleteRepository.getById(input.athleteId);
-        const allowedToAttempt = await this.attemptRepository.allowedToAttempt(athlete.getId(), competition.id, competitionType.getName());
+        const allowedToAttempt = await this.attemptRepository.allowedToAttempt(athlete.getId(), competition.getId(), competitionType.getName());
         if (!allowedToAttempt) throw new ForbiddenError('Athlete not allowed to attempt');
-        const attempt = AttemptFactory.create(competitionType.getName(), athlete.getId(), competition.id, input.unit, input.value);
+        const attempt = AttemptFactory.create(competitionType.getName(), athlete.getId(), competition.getId(), input.unit, input.value);
         await this.attemptRepository.save(attempt);
         return {
             attemptId: attempt.getId(),
