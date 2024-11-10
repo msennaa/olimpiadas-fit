@@ -12,8 +12,9 @@ export class HyperExpressAdapter implements HttpServer {
         (this.app as any)[method](url.replace(/\{|\}/g, ''), async (req: any, res: any) => {
             try {
                 const params = req.params;
+                const query = req.query;
                 const body = await req.json();
-                const output = await callback(params, body);
+                const output = await callback(params, body, query);
                 res.json(output);
             } catch (error: any) {
                 res.status(422).json({
