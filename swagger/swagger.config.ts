@@ -1,8 +1,14 @@
 import { registerAthlete } from './athletes/paths/registerAthlete';
 import { athleteTag } from './athletes/tags/athletes';
+import { createAttempt } from './competition/schema/createAttempt.schema';
 import { createCompetition } from './competition/schema/createCompetition.schema';
+import { createCompetitionType } from './competition/schema/createCompetitionType.schema';
+import { finishCompetition } from './competition/schema/finishCompetition.schema';
 import { getCompetitionById } from './competition/schema/getCompetitionById.schema';
+import { getRankingByCompetitionId } from './competition/schema/getRanking.schema';
+import { attemptTag } from './competition/tags/attempt';
 import { competitionTag } from './competition/tags/competition';
+import { competitionTypeTag } from './competition/tags/competitionType';
 
 export const swaggerDocument = {
     swagger: "2.0",
@@ -21,11 +27,15 @@ export const swaggerDocument = {
     },
     // host: "localhost:5000",
     // basePath: "/api/v1",
-    tags: [athleteTag, competitionTag],
+    tags: [athleteTag, competitionTag, attemptTag, competitionTypeTag],
     schemes: ["http"],
     paths: {
         "/Athlete": registerAthlete,
         "/Competition": createCompetition,
         '/Competition/{id}': getCompetitionById,
+        '/Competition/finished/{id}': finishCompetition,
+        '/ranking/{competitionId}': getRankingByCompetitionId,
+        '/attempt/:{competitionId}': createAttempt,
+        '/competition-type': createCompetitionType
     },
 };
