@@ -20,7 +20,7 @@ export default class CompetitionRepositoryInMemory implements CompetitionReposit
     }
 
     async updateCompetition(competition: Competition): Promise<void> {
-        const competitionIndex = this.competition.findIndex((competition: Competition) => competition.getId() === competition.getId());
+        const competitionIndex = this.competition.findIndex((item: Competition) => item.getId() === competition.getId());
         this.competition[competitionIndex] = competition;
     }
 }
