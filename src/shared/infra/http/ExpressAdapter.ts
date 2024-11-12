@@ -1,5 +1,5 @@
 import HttpServer from '../../application/http/HttpServer';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerDocument } from '../../../../swagger/swagger.config';
 
@@ -10,6 +10,7 @@ export class ExpressAdapter implements HttpServer {
         this.app = express();
         this.app.use(express.json());
         this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        this.app.use(this.responseInterceptor);
     }
 
     register(method: string, url: string, callback: Function): void {
@@ -27,5 +28,18 @@ export class ExpressAdapter implements HttpServer {
 
     listen(port: number): void {
         this.app.listen(port);
+    }
+
+    private responseInterceptor(req: Request, res: Response, next: NextFunction) {
+        const originalJson = res.json.bind(res);
+        res.json = (data: any): Response => {
+            const statusCode = res.statusCode;
+            const formattedResponse = data.message
+                ? { message: data.message, statusCode }
+                : { data, statusCode };
+
+            return originalJson(formattedResponse);
+        };
+        next();
     }
 }
