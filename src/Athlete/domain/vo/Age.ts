@@ -11,8 +11,8 @@ export default class Age {
 
     validateAge(age: number) {
         if (typeof age !== 'number' || isNaN(age)) throw new ValidationError('Age must be a number');
-        if (this.isMinor(age)) throw new ForbiddenError('Minor cant compete');
-        if (this.isElderly(age)) throw new ForbiddenError('Elderly cant compete');
+        if (this.isMinor(age)) throw new ValidationError('Minor cant compete');
+        if (this.isElderly(age)) throw new ValidationError('Elderly cant compete');
         return true;
     }
 
