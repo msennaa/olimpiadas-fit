@@ -26,6 +26,9 @@ export const registerAthlete = {
             "422": {
                 description: "Parâmetros inválidos",
             },
+            "409": {
+                description: "Athlete já existe",
+            }
         },
     },
 }
