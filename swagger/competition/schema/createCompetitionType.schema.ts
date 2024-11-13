@@ -27,6 +27,15 @@ export const createCompetitionType = {
                     },
                 },
             },
+            "409": {
+                description: "Tipo de competição já existe",
+                schema: {
+                    type: "object",
+                    properties: {
+                        message: { type: "string" },
+                    },
+                },
+            },
             "422": {
                 description: "Parametros inválidos",
                 schema: {
