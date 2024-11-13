@@ -30,7 +30,7 @@ export const getRankingByCompetitionId = {
                     },
                 },
             },
-            "422": {
+            "404": {
                 description: "Competição não encontrada",
                 schema: {
                     type: "object",
